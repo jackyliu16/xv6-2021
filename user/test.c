@@ -3,20 +3,6 @@
 #include "kernel/stat.h"
 #include "user/user.h"
 
-// int fork():              :create a process; if child return 0, else return getpid()
-// int exit(int status)     :Terminate current process, status report to wait();
-// int exec(char * file, char* argv[])
-//                          :Load a file and execute it with arguments; will only return when error
-// int open(char *file, int flags)
-//                          :Open a file, flags indicate read/write; return an fd(file descriptor)
-// int read(int fd, char *buf, int n)
-//                          :Read n byte into buf; reutrn number read; or 0 if end of file;
-// int write(int fd, char *buf, int n)
-//                          :Write n bytes from buf to file descriptor fd; return n;
-// int close(int fd)        :Release open file fd
-// int dup(int fd)          :return a new file descriptor ref to same file as fd
-// int pipe(int p[])        :Create a pipe, put read/write file descriptors in p[0] and p[1];
-
 void print_array(int array[], int length){ 
     printf("\n ===== PRINT ===== \n");
     for ( int i = 0 ; i < length ; i++ ) {

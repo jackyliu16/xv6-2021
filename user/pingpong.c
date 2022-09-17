@@ -28,6 +28,7 @@ int main(int argc, char** argv){
     pipe(p2c);
     pipe(c2p);
 
+    // 使用一个缓存数组，来临时存放对应的数据
     char buf[20];
 
     if (fork() == 0) {

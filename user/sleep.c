@@ -24,7 +24,6 @@ int main(int argc, char** argv){
         }
         else{
             int duration = atoi(argv[1]);
-            //printf("Sleeping %f", duration / 10.0);
             sleep(duration);
             exit(0);
         }
@@ -37,6 +36,7 @@ cmd_parse parse_cmd(int argc, char** argv){
         return toomany_char;
     }
     else {
+        // check each if it's number
         int i = 0;
         while (argv[1][i] != '\0')
         {
