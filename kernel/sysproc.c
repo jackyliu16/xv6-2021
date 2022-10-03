@@ -95,3 +95,13 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_trace(void) {
+  int pid; // get sys pid;
+  
+  if (argint(0, &pid) < 0)
+    return -1;
+  //TODO save infomation inside the proc struct
+  return 0;
+}
