@@ -156,6 +156,7 @@ static char syscall_name[23][16] = {
 "mkdir ", // 20
 "close ", // 21
 "trace ", // 22
+"sysinfo", //23
 };
 
 

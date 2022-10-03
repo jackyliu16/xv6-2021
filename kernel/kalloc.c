@@ -57,7 +57,7 @@ kfree(void *pa)
   r = (struct run*)pa;
 
   acquire(&kmem.lock);
-  r->next = kmem.freelist;
+  r->next = kmem.freelist;    // add a new physical block? at the kmem.freelist linked list head
   kmem.freelist = r;
   release(&kmem.lock);
 }
@@ -79,4 +79,21 @@ kalloc(void)
   if(r)
     memset((char*)r, 5, PGSIZE); // fill with junk
   return (void*)r;
+}
+
+uint64 
+kgetfreemem(void) {
+
+  struct run *r;
+  uint64 n = 0;
+
+  acquire(&kmem.lock);
+  r = kmem.freelist;      // try to get the num of freelist 
+  while (r) {
+    ++n;
+    r = r -> next;
+  }
+  release(&kmem.lock);
+
+  return n * PGSIZE;
 }

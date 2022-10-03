@@ -8,7 +8,7 @@
 
 struct cpu cpus[NCPU];
 
-struct proc proc[NPROC];
+struct proc proc[NPROC];    // a data struct which saving all process struct
 
 struct proc *initproc;
 
@@ -106,7 +106,7 @@ allocproc(void)
 {
   struct proc *p;
 
-  for(p = proc; p < &proc[NPROC]; p++) {
+  for(p = proc; p < &proc[NPROC]; p++) {      // for all process ?
     acquire(&p->lock);
     if(p->state == UNUSED) {
       goto found;
@@ -655,4 +655,20 @@ procdump(void)
     printf("%d %s %s", p->pid, state, p->name);
     printf("\n");
   }
+}
+
+uint64
+get_num_proc(void) {
+
+  uint64 n = 0;
+  struct proc *p;
+
+  for (p=proc; p < &proc[NPROC] ; ++p ) {     // for all process 
+    if ( p -> state != UNUSED ) {
+      ++n;
+    }
+  }
+
+  return n;
+  
 }

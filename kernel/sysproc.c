@@ -109,5 +109,9 @@ sys_trace(void) {
 
 uint64
 sys_sysinfo(void) {
-  return 0;
+
+  // 1. asking for a kernel address alloc
+  // 2. getting information from the function
+  // 3. saving data inside the address
+
 }
