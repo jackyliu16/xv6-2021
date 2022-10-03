@@ -131,6 +131,32 @@ static uint64 (*syscalls[])(void) = {
 [SYS_trace]   sys_trace,
 };
 
+static char syscall_name[23][16] = {
+"fork  ", //  1
+"exit  ", //  2
+"wait  ", //  3
+"pipe  ", //  4
+"read  ", //  5
+"kill  ", //  6
+"exec  ", //  7
+"fstat ", //  8
+"chdir ", //  9
+"dup   ", // 10
+"getpid", // 11
+"sbrk  ", // 12
+"sleep ", // 13
+"uptime", // 14
+"open  ", // 15
+"write ", // 16
+"mknod ", // 17
+"unlink", // 18
+"link  ", // 19
+"mkdir ", // 20
+"close ", // 21
+"trace ", // 22
+};
+
+
 void
 syscall(void)
 {
@@ -138,8 +164,14 @@ syscall(void)
   struct proc *p = myproc();
 
   num = p->trapframe->a7;
+  // check if this syscall could be use and there is inside syscalls array
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     p->trapframe->a0 = syscalls[num]();
+    // if this syscall has been record
+    if ( p -> syscall_record > 0 && p -> syscall_record & (1<<num) ) {              // Hint: using this to print the syscall information 
+                                                                                    // when this syscall been asking for and syscall_existed
+      printf("%d: syscall %s -> %d\n", p->pid, syscall_name[num-1], p->trapframe->a0);
+    }
   } else {
     printf("%d %s: unknown sys call %d\n",
             p->pid, p->name, num);

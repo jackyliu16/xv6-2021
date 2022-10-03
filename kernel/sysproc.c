@@ -102,6 +102,6 @@ sys_trace(void) {
   
   if (argint(0, &pid) < 0)
     return -1;
-  //TODO save infomation inside the proc struct
+  myproc()->syscall_record = pid;   // Hint: record this syscall inside per-process state structs
   return 0;
 }
