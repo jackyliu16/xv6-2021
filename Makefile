@@ -91,7 +91,7 @@ LD = $(TOOLPREFIX)ld
 OBJCOPY = $(TOOLPREFIX)objcopy
 OBJDUMP = $(TOOLPREFIX)objdump
 
-CFLAGS = -Wall -Werror -O -fno-omit-frame-pointer -ggdb
+CFLAGS = -Wall -Werror -Wno-error=infinite-recursion -O -fno-omit-frame-pointer -ggdb
 
 ifdef LAB
 LABUPPER = $(shell echo $(LAB) | tr a-z A-Z)
@@ -113,6 +113,12 @@ ifdef KCSAN
 CFLAGS += -DKCSAN
 KCSANFLAG = -fsanitize=thread
 endif
+#Enable flag -Who-error=infinite-recursion when available
+GCC_VERSION = $(shell $(CC) -dumpversion | cut -d '.' -f1)
+ifeq ($(shell echo $(GCC_VERSION) / 11 2>/dev/null/ | bc | grep -e '^0'), )
+CFLAGS += -Wno-error=infinite-recursion
+endif
+
 
 # Disable PIE when possible (for Ubuntu 16.10 toolchain)
 ifneq ($(shell $(CC) -dumpspecs 2>/dev/null | grep -e '[^f]no-pie'),)
