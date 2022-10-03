@@ -109,9 +109,22 @@ sys_trace(void) {
 
 uint64
 sys_sysinfo(void) {
+  
+  // REFERENCE THE ANSWER IN THIS FUNCTION
 
-  // 1. asking for a kernel address alloc
-  // 2. getting information from the function
-  // 3. saving data inside the address
+  uint64 addr;
 
+  if (argaddr(0, &addr) < 0) 
+    return -1;
+
+  struct proc *p = myproc();
+  struct sysinfo info;
+
+  info.freemem = kgetfreemem();
+  info.nproc = get_num_proc();
+
+  if (copyout(p->pagetable, addr, (char *)&info, sizeof(info)) < 0)
+    return -1;
+
+  return 0;
 }
