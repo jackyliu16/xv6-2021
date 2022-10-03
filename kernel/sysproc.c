@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+#include "sysinfo.h"
 
 uint64
 sys_exit(void)
@@ -103,5 +104,10 @@ sys_trace(void) {
   if (argint(0, &pid) < 0)
     return -1;
   myproc()->syscall_record = pid;   // Hint: record this syscall inside per-process state structs
+  return 0;
+}
+
+uint64
+sys_sysinfo(void) {
   return 0;
 }
